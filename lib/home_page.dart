@@ -1,56 +1,110 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
+class SignUpApp extends StatelessWidget {
+  const SignUpApp();
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => const SignUpScreen(),
+      },
+    );
+  }
+}
 
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.indigoAccent.withOpacity(0.2),
+      body: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width * 0.2),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: Card(
+                child: SignUpForm(),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SignUpForm extends StatefulWidget {
+  const SignUpForm();
+
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  final _firstNameTextController = TextEditingController();
+  final _lastNameTextController = TextEditingController();
+  final _usernameTextController = TextEditingController();
+
+  double _formProgress = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LinearProgressIndicator(value: _formProgress),
+          Text('Sign up', style: Theme.of(context).textTheme.headlineMedium),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _firstNameTextController,
+              decoration: const InputDecoration(hintText: 'First name'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _lastNameTextController,
+              decoration: const InputDecoration(hintText: 'Last name'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _usernameTextController,
+              decoration: const InputDecoration(hintText: 'Username'),
+            ),
+          ),
+          TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.resolveWith(
+                      (Set<MaterialState> states) {
+                    return states.contains(MaterialState.disabled)
+                        ? null
+                        : Colors.white;
+                  }),
+              backgroundColor: MaterialStateProperty.resolveWith(
+                      (Set<MaterialState> states) {
+                    return states.contains(MaterialState.disabled)
+                        ? null
+                        : Colors.indigoAccent;
+                  }),
+            ),
+            onPressed: null,
+            child: const Text('Sign up'),
+          ),
+        ],
+      ),
     );
   }
 }
