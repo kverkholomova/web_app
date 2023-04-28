@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class SignUpApp extends StatelessWidget {
   const SignUpApp();
 
@@ -112,36 +110,6 @@ class _SignUpFormState extends State<SignUpForm> {
             textField(_firstNameTextController, 'First name'),
             textField(_lastNameTextController, 'Last name'),
             textField(_usernameTextController, 'Username'),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: TextFormField(
-            //     controller: _firstNameTextController,
-            //     decoration: InputDecoration(hintText: 'First name', hintStyle: GoogleFonts.oswald(
-            //         color: Colors.black.withOpacity(0.6),
-            //         fontSize: 18
-            //     ),),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: TextFormField(
-            //     controller: _lastNameTextController,
-            //     decoration: InputDecoration(hintText: 'Last name', hintStyle: GoogleFonts.oswald(
-            //         color: Colors.black.withOpacity(0.6),
-            //         fontSize: 18
-            //     ),),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: TextFormField(
-            //     controller: _usernameTextController,
-            //     decoration: InputDecoration(hintText: 'Username', hintStyle: GoogleFonts.oswald(
-            //         color: Colors.black.withOpacity(0.6),
-            //         fontSize: 18
-            //     ),),
-            //   ),
-            // ),
             SizedBox(
               height: MediaQuery.of(context).size.width * 0.02,
             ),
