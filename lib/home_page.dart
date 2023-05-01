@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigoAccent.withOpacity(0.2),
+      backgroundColor: Colors.white,
       body: Center(
         child:
         Text('Welcome!', style: GoogleFonts.oswald(
@@ -101,7 +101,8 @@ class _SignUpFormState extends State<SignUpForm> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            LinearProgressIndicator(value: _formProgress, color: Colors.indigoAccent, backgroundColor: Colors.indigoAccent.withOpacity(0.15),),
+            AnimatedProgressIndicator(value: _formProgress),
+            // LinearProgressIndicator(value: _formProgress, color: Colors.indigoAccent, backgroundColor: Colors.indigoAccent.withOpacity(0.15),),
             Text('Sign up', style: GoogleFonts.oswald(
                 color: Colors.indigoAccent,
                 fontWeight: FontWeight.bold,
@@ -172,6 +173,69 @@ class _SignUpFormState extends State<SignUpForm> {
             color: Colors.black.withOpacity(0.6),
             fontSize: 14
         ),),
+      ),
+    );
+  }
+}
+
+class AnimatedProgressIndicator extends StatefulWidget {
+  final double value;
+
+  const AnimatedProgressIndicator({
+    required this.value,
+  });
+
+  @override
+  State<AnimatedProgressIndicator> createState() {
+    return _AnimatedProgressIndicatorState();
+  }
+}
+
+class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Color?> _colorAnimation;
+  late Animation<double> _curveAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        duration: Duration(milliseconds: 1200), vsync: this);
+
+    final colorTween = TweenSequence([
+      TweenSequenceItem(
+        tween: ColorTween(begin: Colors.indigo[100], end: Colors.indigo[400]),
+        weight: 1,
+      ),
+      TweenSequenceItem(
+        tween: ColorTween(begin: Colors.indigo[400], end: Colors.indigo),
+        weight: 1,
+      ),
+      TweenSequenceItem(
+        tween: ColorTween(begin: Colors.indigo, end: Colors.indigo[900]),
+        weight: 1,
+      ),
+    ]);
+
+    _colorAnimation = _controller.drive(colorTween);
+    _curveAnimation = _controller.drive(CurveTween(curve: Curves.easeIn));
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _controller.animateTo(widget.value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) => LinearProgressIndicator(
+        value: _curveAnimation.value,
+        valueColor: _colorAnimation,
+        backgroundColor: _colorAnimation.value?.withOpacity(0.4),
       ),
     );
   }
