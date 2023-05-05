@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'concentric_transition_intro.dart';
 import 'home_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: const SignUpApp()
+      home: const Intro()
     );
   }
 }
